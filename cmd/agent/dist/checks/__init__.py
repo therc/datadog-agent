@@ -19,7 +19,6 @@ from config import (
 )
 from utils.proxy import (
     get_requests_proxy,
-    get_no_proxy_from_env,
     config_proxy_skip
 )
 
@@ -34,29 +33,12 @@ class AgentLogHandler(logging.Handler):
         msg = self.format(record)
         datadog_agent.log("(%s:%s) | %s" % (record.filename, record.lineno, msg), record.levelno)
 
-
-def init_logging():
-    """
-    Initialize logging (set up forwarding to Go backend and sane defaults)
-    """
-    # Forward to Go backend
-    rootLogger = logging.getLogger()
-    rootLogger.addHandler(AgentLogHandler())
-    rootLogger.setLevel(_get_py_loglevel(datadog_agent.get_config('log_level')))
-
-    # `requests` (used in a lot of checks) imports `urllib3`, which logs a bunch of stuff at the info level
-    # Therefore, pre-emptively increase the default level of that logger to `WARN`
-    urllib_logger = logging.getLogger("requests.packages.urllib3")
-    urllib_logger.setLevel(logging.WARN)
-    urllib_logger.propagate = True
-
-
-init_logging()
-
+rootLogger = logging.getLogger()
+rootLogger.addHandler(AgentLogHandler())
+rootLogger.setLevel(_get_py_loglevel(datadog_agent.get_config('log_level')))
 
 class CheckException(Exception):
     pass
-
 
 class AgentCheck(object):
     OK, WARNING, CRITICAL, UNKNOWN = (0, 1, 2, 3)
@@ -115,11 +97,6 @@ class AgentCheck(object):
                 False,
                 "DEPRECATION NOTICE: `in_developer_mode` is deprecated, please stop using it.",
             ],
-            'no_proxy': [
-                False,
-                "DEPRECATION NOTICE: The `no_proxy` config option has been renamed "
-                "to `skip_proxy` and will be removed in a future release.",
-            ],
         }
 
 
@@ -129,19 +106,10 @@ class AgentCheck(object):
         return False
 
 
-    def get_instance_proxy(self, instance, uri, proxies=None):
-        proxies = proxies if proxies is not None else self.proxies.copy()
-        proxies['no'] = get_no_proxy_from_env()
+    def get_instance_proxy(self, instance, uri):
+        proxies = self.proxies.copy()
 
-        deprecated_skip = instance.get('no_proxy', None)
-        skip = (
-            _is_affirmative(instance.get('skip_proxy', not self._use_agent_proxy)) or
-            _is_affirmative(deprecated_skip)
-        )
-
-        if deprecated_skip is not None:
-            self._log_deprecation('no_proxy')
-
+        skip = _is_affirmative(instance.get('no_proxy', not self._use_agent_proxy))
         return config_proxy_skip(proxies, uri, skip)
 
     def _submit_metric(self, mtype, name, value, tags=None, hostname=None, device_name=None):
@@ -279,19 +247,20 @@ class AgentCheck(object):
         - normalize tags to type `str`
         - always return a list
         """
-        self.log.warning("Tags: %s", tags)
-        self.log.warning("Device Name: %s", device_name)
         if tags is None:
             normalized_tags = []
         else:
             normalized_tags = list(tags)  # normalize to `list` type, and make a copy
-            self.log.warning("Normalized Tags: %s", normalized_tags)
+
+	self.log.warning("Tags: %s", tags)
+	self.log.warning("Normalized Tags: %s", normalized_tags)
+	self.log.warning("Device Name: %s", device_name)
 
         if device_name:
             self._log_deprecation("device_name")
             normalized_tags.append("device:%s" % device_name)
 
-        self.log.warning("Should have device name: %s", normalized_tags)
+	self.log.warning("Normalized final tags: %s", normalized_tags)
         return self._normalize_tags_type(normalized_tags)
 
     def _normalize_tags_type(self, tags):
