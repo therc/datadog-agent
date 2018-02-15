@@ -57,10 +57,12 @@ ENV DOCKER_DD_AGENT=yes \
     # Exit container if entrypoint fails
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 
-# Install openjdk-8-jre-headless on jmx flavor
-RUN if [ -n "$WITH_JMX" ]; then apt-get update \
+# Install openjdk-9-jre-headless on jmx flavor
+RUN if [ -n "$WITH_JMX" ]; then \
+ echo 'deb http://deb.debian.org/debian stretch-backports main' > /etc/apt/sources.list.d/backports.list \
+ && apt-get update \
  && mkdir /usr/share/man/man1 \
- && apt-get install --no-install-recommends -y openjdk-8-jre-headless \
+ && apt-get install --no-install-recommends -y openjdk-9-jre-headless \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*; fi
 
