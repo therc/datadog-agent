@@ -10,10 +10,11 @@ append_timestamp false
 if ENV["S3_OMNIBUS_CACHE_BUCKET"]
   use_s3_caching true
   s3_bucket ENV["S3_OMNIBUS_CACHE_BUCKET"]
-  s3_access_key ENV["AWS_ACCESS_KEY_ID"]
-  s3_secret_key ENV["AWS_SECRET_ACCESS_KEY"]
+  # s3_access_key ENV["AWS_ACCESS_KEY_ID"]
+  # s3_secret_key ENV["AWS_SECRET_ACCESS_KEY"]
   s3_endpoint "https://s3.amazonaws.com"
   s3_force_path_style true
+  s3_role true
   s3_role_arn "arn:aws:iam::486234852809:role/ci-datadog-agent"
-  s3_role_session_name 
+  s3_role_session_name ENV["ROLE_SESSION_NAME"]
 end
