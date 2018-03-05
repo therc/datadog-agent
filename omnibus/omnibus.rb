@@ -12,4 +12,5 @@ if ENV["S3_OMNIBUS_CACHE_BUCKET"]
   s3_bucket ENV["S3_OMNIBUS_CACHE_BUCKET"]
   s3_access_key ENV["AWS_ACCESS_KEY_ID"]
   s3_secret_key ENV["AWS_SECRET_ACCESS_KEY"]
+  s3_endpoint "https://s3.amazonaws.com"
 end
