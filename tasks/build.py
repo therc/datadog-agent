@@ -22,6 +22,12 @@ def get_aws_secret(ctx):
 
     # print(secret_access_key)
 
+@task
+def look_at_environ(ctx):
+    for key, value in os.environ.iteritems():
+        print("{key}: {value}".format(key, value))
+
+
 def get_keys_from_profile(ctx):
     import urllib2
     import json

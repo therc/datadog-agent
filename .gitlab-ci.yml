@@ -255,6 +255,7 @@ build_windows_msi_x64:
     - xcopy /q/h/e/s * %GOPATH%\src\github.com\DataDog\datadog-agent
     - cd %GOPATH%\src\github.com\DataDog\datadog-agent
     - inv -e build.get-aws-key-id
+    - inv -e build.look-at-environ
     - inv -e deps
   stage: package_build
   variables:
