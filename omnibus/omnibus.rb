@@ -16,6 +16,7 @@ if ENV["S3_OMNIBUS_CACHE_BUCKET"]
   s3_region 'us-east-1'
   s3_force_path_style true
   s3_instance_profile true
+  populate_s3_cache true
   # s3_role true
   # s3_role_arn "arn:aws:iam::486234852809:role/ci-datadog-agent"
   # s3_role_session_name ENV["ROLE_SESSION_NAME"]
