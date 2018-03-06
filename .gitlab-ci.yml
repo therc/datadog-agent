@@ -161,10 +161,6 @@ agent_deb-x64:
   variables:
     AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /credentials
   script:
-    - set +x
-    - inv -e build.get-aws-key-id
-    - inv -e build.get-aws-secret
-    - set -x
     # remove artifacts from previous pipelines that may come from the cache
     - rm -rf $OMNIBUS_PACKAGE_DIR/*
     - echo $ROLE_SESSION_NAME
@@ -258,11 +254,14 @@ build_windows_msi_x64:
     - mkdir %GOPATH%\src\github.com\DataDog\datadog-agent
     - xcopy /q/h/e/s * %GOPATH%\src\github.com\DataDog\datadog-agent
     - cd %GOPATH%\src\github.com\DataDog\datadog-agent
-    # - export AWS_ACCESS_KEY_ID=$(inv.get_aws_key_id)
-    # - export AWS_SECRET_ACCESS_KEY=$(inv.get_aws_secret)
+    - set +x
+    - inv -e build.get-aws-key-id
+    - inv -e build.get-aws-secret
+    - set -x
     - inv -e deps
   stage: package_build
-  # variables:
+  variables:
+    WINDOWS: true
   #   AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /credentials
   tags: ["runner:windows-agent6"]
   script:
