@@ -243,7 +243,7 @@ def omnibus_build(ctx, puppy=False, log_level="info", base_dir=None, gem_path=No
             "populate_s3_cache": ""
         }
         if not invoke.platform.WINDOWS:
-            args['populate_s3_cache'] = " --populate-s3-cache "
+        args['populate_s3_cache'] = " --populate-s3-cache "
         env = load_release_versions(ctx, release_version)
         if skip_sign:
             env['SKIP_SIGN_MAC'] = 'true'
