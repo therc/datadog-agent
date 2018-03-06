@@ -7,17 +7,15 @@ windows_arch :x86_64
 # Don't append a timestamp to the package version
 append_timestamp false
 
+# Do not set this environment variable if building locally.
+# This cache is only necessary because Datadog is building
+# the agent over and over again in a highly distributed environment.
 if ENV["S3_OMNIBUS_CACHE_BUCKET"]
   use_s3_caching true
   s3_bucket ENV["S3_OMNIBUS_CACHE_BUCKET"]
-  # s3_access_key ENV["AWS_ACCESS_KEY_ID"]
-  # s3_secret_key ENV["AWS_SECRET_ACCESS_KEY"]
   s3_endpoint "https://s3.amazonaws.com"
   s3_region 'us-east-1'
   s3_force_path_style true
   s3_instance_profile true
-  # s3_role true
-  # s3_role_arn "arn:aws:iam::486234852809:role/ci-datadog-agent"
-  # s3_role_session_name ENV["ROLE_SESSION_NAME"]
-  s3_authenticated_download true
+  # s3_authenticated_download true
 end
