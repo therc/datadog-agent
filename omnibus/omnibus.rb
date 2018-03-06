@@ -15,8 +15,9 @@ if ENV["S3_OMNIBUS_CACHE_BUCKET"]
   s3_endpoint "https://s3.amazonaws.com"
   s3_region 'us-east-1'
   s3_force_path_style true
-  s3_role true
-  s3_role_arn "arn:aws:iam::486234852809:role/ci-datadog-agent"
-  s3_role_session_name ENV["ROLE_SESSION_NAME"]
+  s3_instance_profile true
+  # s3_role true
+  # s3_role_arn "arn:aws:iam::486234852809:role/ci-datadog-agent"
+  # s3_role_session_name ENV["ROLE_SESSION_NAME"]
   s3_authenticated_download true
 end
