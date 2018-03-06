@@ -11,7 +11,7 @@ def get_aws_key_id(ctx):
     """
     access_key_id, secret_access_key = get_keys_from_profile(ctx)
 
-    print(access_key_id)
+    # print(access_key_id)
 
 @task
 def get_aws_secret(ctx):
@@ -20,7 +20,7 @@ def get_aws_secret(ctx):
     """
     access_key_id, secret_access_key = get_keys_from_profile(ctx)
 
-    print(secret_access_key)
+    # print(secret_access_key)
 
 def get_keys_from_profile(ctx):
     import urllib2
