@@ -114,7 +114,7 @@ def omnibus_build(ctx, log_level="info", base_dir=None, gem_path=None,
             "overrides": overrides_cmd,
             "populate_s3_cache": ""
         }
-        if !invoke.platform.WINDOWS:
+        if not invoke.platform.WINDOWS:
             args['populate_s3_cache'] = " --populate-s3-cache "
         env = {}
         if skip_sign:
