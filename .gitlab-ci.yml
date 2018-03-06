@@ -159,7 +159,6 @@ agent_deb-x64:
   image: 486234852809.dkr.ecr.us-east-1.amazonaws.com/ci/datadog-agent-builders/deb_x64:latest
   tags: [ "runner:main", "size:large" ]
   variables:
-    ROLE_SESSION_NAME: agent-deb-x64-$CI_PROJECT_NAME-$CI_PIPELINE_ID
     AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /credentials
   script:
     - set +x
@@ -192,7 +191,7 @@ agent_rpm-x64:
   image: 486234852809.dkr.ecr.us-east-1.amazonaws.com/ci/datadog-agent-builders/rpm_x64:latest
   tags: [ "runner:main", "size:large" ]
   variables:
-    ROLE_SESSION_NAME: agent-rpm-x64-$CI_PROJECT_NAME-$CI_PIPELINE_ID
+    AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /credentials
   script:
     # remove artifacts from previous pipelines that may come from the cache
     - rm -rf $OMNIBUS_PACKAGE_DIR/*
@@ -224,7 +223,7 @@ agent_suse-x64:
   image: 486234852809.dkr.ecr.us-east-1.amazonaws.com/ci/datadog-agent-builders/suse_x64:latest
   tags: [ "runner:main", "size:large" ]
   variables:
-    ROLE_SESSION_NAME: agent-suse-x64-$CI_PROJECT_NAME-$CI_PIPELINE_ID
+    AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /credentials
   script:
     # remove artifacts from previous pipelines that may come from the cache
     - rm -rf $OMNIBUS_PACKAGE_DIR/*
@@ -264,7 +263,7 @@ build_windows_msi_x64:
     - inv -e deps
   stage: package_build
   variables:
-    ROLE_SESSION_NAME: build-windows-msi-x64-$CI_PROJECT_NAME-$CI_PIPELINE_ID
+    AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /credentials
   tags: ["runner:windows-agent6"]
   script:
     # remove artifacts from previous pipelines that may come from the cache
@@ -282,7 +281,7 @@ cluster-agent_deb-x64:
   image: 486234852809.dkr.ecr.us-east-1.amazonaws.com/ci/datadog-agent-builders/deb_x64:latest
   tags: [ "runner:main", "size:large" ]
   variables:
-    ROLE_SESSION_NAME: cluster-agent-deb-x64-$CI_PROJECT_NAME-$CI_PIPELINE_ID
+    AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /credentials
   script:
     # remove artifacts from previous pipelines that may come from the cache
     - rm -rf $OMNIBUS_PACKAGE_DIR/*
@@ -309,7 +308,7 @@ cluster-agent_rpm-x64:
   image: 486234852809.dkr.ecr.us-east-1.amazonaws.com/ci/datadog-agent-builders/rpm_x64:latest
   tags: [ "runner:main", "size:large" ]
   variables:
-    ROLE_SESSION_NAME: cluster-agent-rpm-x64-$CI_PROJECT_NAME-$CI_PIPELINE_ID
+    AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /credentials
   script:
     # remove artifacts from previous pipelines that may come from the cache
     - rm -rf $OMNIBUS_PACKAGE_DIR/*
@@ -340,7 +339,7 @@ dogstatsd_deb-x64:
   image: 486234852809.dkr.ecr.us-east-1.amazonaws.com/ci/datadog-agent-builders/deb_x64:latest
   tags: [ "runner:main", "size:large" ]
   variables:
-    ROLE_SESSION_NAME: dogstatsd-deb-x64-$CI_PROJECT_NAME-$CI_PIPELINE_ID
+    AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /credentials
   script:
     # remove artifacts from previous pipelines that may come from the cache
     - rm -rf $OMNIBUS_PACKAGE_DIR/*
@@ -367,7 +366,7 @@ dogstatsd_rpm-x64:
   image: 486234852809.dkr.ecr.us-east-1.amazonaws.com/ci/datadog-agent-builders/rpm_x64:latest
   tags: [ "runner:main", "size:large" ]
   variables:
-    ROLE_SESSION_NAME: dogstatsd-rpm-x64-$CI_PROJECT_NAME-$CI_PIPELINE_ID
+    AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /credentials
   script:
     # remove artifacts from previous pipelines that may come from the cache
     - rm -rf $OMNIBUS_PACKAGE_DIR/*
@@ -400,7 +399,7 @@ dogstatsd_suse-x64:
   image: 486234852809.dkr.ecr.us-east-1.amazonaws.com/ci/datadog-agent-builders/suse_x64:latest
   tags: [ "runner:main", "size:large" ]
   variables:
-    ROLE_SESSION_NAME: dogstatsd-suse-x64-$CI_PROJECT_NAME-$CI_PIPELINE_ID
+    AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /credentials
   script:
     # remove artifacts from previous pipelines that may come from the cache
     - rm -rf $OMNIBUS_PACKAGE_DIR/*
