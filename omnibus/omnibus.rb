@@ -17,5 +17,5 @@ if ENV["S3_OMNIBUS_CACHE_BUCKET"]
   s3_region 'us-east-1'
   s3_force_path_style true
   s3_instance_profile true
-  # s3_authenticated_download true
+  s3_authenticated_download true
 end
