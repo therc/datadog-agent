@@ -16,6 +16,10 @@ if ENV["S3_OMNIBUS_CACHE_BUCKET"]
   s3_endpoint "https://s3.amazonaws.com"
   s3_region 'us-east-1'
   s3_force_path_style true
-  s3_instance_profile true
   s3_authenticated_download true
+  if ENV['WINDOWS_BUILDER']
+    s3_profile 'default'
+  else
+    s3_instance_profile true
+  end
 end
