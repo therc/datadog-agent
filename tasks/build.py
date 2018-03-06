@@ -27,7 +27,7 @@ def get_keys_from_profile(ctx):
     import json
     if os.environ.get('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'):
         url = 'http://169.254.170.2' + os.environ.get('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI')
-        res = urllib2.urlopen(aws_security_url + profile_name, timeout=5)
+        res = urllib2.urlopen(url + profile_name, timeout=5)
         if res.code >= 400:
             raise "Status Code"
     else:
