@@ -261,8 +261,8 @@ build_windows_msi_x64:
     - inv -e deps
   stage: package_build
   variables:
-    WINDOWS: true
-  #   AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /credentials
+    WINDOWS_BUILDER: 'true'
+    #   AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /credentials
   tags: ["runner:windows-agent6"]
   script:
     # remove artifacts from previous pipelines that may come from the cache
