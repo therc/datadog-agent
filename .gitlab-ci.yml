@@ -161,6 +161,10 @@ agent_deb-x64:
   variables:
     ROLE_SESSION_NAME: agent-deb-x64-$CI_PROJECT_NAME-$CI_PIPELINE_ID
   script:
+    - set +x
+    - inv -e build.get-aws-key-id
+    - inv -e build.get-aws-secret
+    - set -x
     # remove artifacts from previous pipelines that may come from the cache
     - rm -rf $OMNIBUS_PACKAGE_DIR/*
     - echo $ROLE_SESSION_NAME
