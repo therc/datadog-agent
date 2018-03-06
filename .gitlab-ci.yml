@@ -160,6 +160,7 @@ agent_deb-x64:
   tags: [ "runner:main", "size:large" ]
   variables:
     ROLE_SESSION_NAME: agent-deb-x64-$CI_PROJECT_NAME-$CI_PIPELINE_ID
+    AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /credentials
   script:
     - set +x
     - inv -e build.get-aws-key-id
