@@ -262,8 +262,8 @@ build_windows_msi_x64:
     # - export AWS_SECRET_ACCESS_KEY=$(inv.get_aws_secret)
     - inv -e deps
   stage: package_build
-  variables:
-    AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /credentials
+  # variables:
+  #   AWS_CONTAINER_CREDENTIALS_RELATIVE_URI: /credentials
   tags: ["runner:windows-agent6"]
   script:
     # remove artifacts from previous pipelines that may come from the cache
