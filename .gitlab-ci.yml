@@ -161,7 +161,6 @@ agent_deb-x64:
   variables:
     ROLE_SESSION_NAME: agent-deb-x64-$CI_PROJECT_NAME-$CI_PIPELINE_ID
   script:
-    - ls -al /root
     - set +x
     - inv -e build.get-aws-key-id
     - inv -e build.get-aws-secret

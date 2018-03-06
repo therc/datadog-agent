@@ -2,6 +2,7 @@
 Generic build tasks
 """
 from invoke import task
+import os
 
 @task
 def get_aws_key_id(ctx):
@@ -24,14 +25,20 @@ def get_aws_secret(ctx):
 def get_keys_from_profile(ctx):
     import urllib2
     import json
-    aws_security_url = "http://169.254.170.2"
-    res = urllib2.urlopen(aws_security_url, timeout=5)
-    if res.code >= 400:
-        raise "Status Code"
-    profile_name = res.read()
-    res = urllib2.urlopen(aws_security_url + profile_name, timeout=5)
-    if res.code >= 400:
-        raise "Status Code"
+    if os.environ.get('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'):
+        url = 'http://169.254.170.2' + os.environ.get('AWS_CONTAINER_CREDENTIALS_RELATIVE_URI')
+        res = urllib2.urlopen(aws_security_url + profile_name, timeout=5)
+        if res.code >= 400:
+            raise "Status Code"
+    else:
+        aws_security_url = "http://169.254.169.254/latest/meta-data/iam/security-credentials/"
+        res = urllib2.urlopen(aws_security_url, timeout=5)
+        if res.code >= 400:
+            raise "Status Code"
+        profile_name = res.read()
+        res = urllib2.urlopen(aws_security_url + profile_name, timeout=5)
+        if res.code >= 400:
+            raise "Status Code"
 
     res_body = json.loads(res.read())
 
