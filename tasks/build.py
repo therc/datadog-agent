@@ -24,7 +24,7 @@ def get_aws_secret(ctx):
 def get_keys_from_profile(ctx):
     import urllib2
     import json
-    aws_security_url = "http://169.254.169.254/latest/meta-data/iam/security-credentials/"
+    aws_security_url = "http://169.254.170.2/latest/meta-data/iam/security-credentials/"
     res = urllib2.urlopen(aws_security_url, timeout=5)
     if res.code >= 400:
         raise "Status Code"
